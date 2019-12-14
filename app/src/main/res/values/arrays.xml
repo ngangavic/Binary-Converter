@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="convert">
+        <item >Binary Coded Decimal</item>
+        <item >Hexadecimal</item>
+        <item >ASCII Code</item>
+    </array>
+</resources>
