@@ -5,4 +5,34 @@
         <item >Hexadecimal</item>
         <item >ASCII Code</item>
     </array>
+
+    <array name="binary">
+        <item name="a">01100001</item>
+        <item name="b">01100010</item>
+        <item name="c">01100011</item>
+        <item name="d">01100100</item>
+        <item name="e">01100101</item>
+        <item name="f">01100110</item>
+        <item name="g">01100111</item>
+        <item name="h">01101000</item>
+        <item name="i">01101001</item>
+        <item name="j">01101010</item>
+        <item name="k">01101011</item>
+        <item name="l">01101100</item>
+        <item name="m">01101101</item>
+        <item name="n">01101110</item>
+        <item name="o">01101111</item>
+        <item name="p">01110000</item>
+        <item name="q">01110001</item>
+        <item name="r">01110010</item>
+        <item name="s">01110011</item>
+        <item name="t">01110100</item>
+        <item name="u">01110101</item>
+        <item name="v">01110110</item>
+        <item name="w">01110111</item>
+        <item name="x">01111000</item>
+        <item name="y">01111001</item>
+        <item name="z">01111010</item>
+    </array>
+
 </resources>
