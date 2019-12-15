@@ -1,6 +1,5 @@
 package com.ngangavictor.binaryconverter
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,7 +16,6 @@ import com.ngangavictor.binaryconverter.data.Data.Companion.binaryCapital
 import com.ngangavictor.binaryconverter.data.Data.Companion.binarySmall
 import com.ngangavictor.binaryconverter.data.Data.Companion.capitalLetters
 import com.ngangavictor.binaryconverter.data.Data.Companion.smallLetters
-import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
