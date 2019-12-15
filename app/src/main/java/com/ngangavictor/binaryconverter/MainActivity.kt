@@ -1,5 +1,6 @@
 package com.ngangavictor.binaryconverter
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,8 +11,11 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.ngangavictor.binaryconverter.data.Data.Companion.asciiCapital
 import com.ngangavictor.binaryconverter.data.Data.Companion.asciiSmall
+import com.ngangavictor.binaryconverter.data.Data.Companion.binaryCapital
 import com.ngangavictor.binaryconverter.data.Data.Companion.binarySmall
+import com.ngangavictor.binaryconverter.data.Data.Companion.capitalLetters
 import com.ngangavictor.binaryconverter.data.Data.Companion.smallLetters
 import java.lang.Exception
 
@@ -22,11 +26,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var textViewResult: TextView
     lateinit var type: String
     lateinit var prev:String
-
-
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,21 +103,39 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getASCIISmall(c: Char) {
-        val a = asciiSmall.get(smallLetters.indexOf(c.toString()))
-        Log.d("MAIN ACTIVITY ASCII",a)
-        val final = prev+" "+a
-        Log.d("FINAL ASCII",final)
-        textViewResult.text=""
-        textViewResult.text=final
+        if(c.isUpperCase()){
+            val a = asciiCapital.get(capitalLetters.indexOf(c.toString()))
+            Log.d("MAIN ACTIVITY ASCII", a)
+            val final = prev + " " + a
+            Log.d("FINAL ASCII", final)
+            textViewResult.text = ""
+            textViewResult.text = final
+        }else {
+            val a = asciiSmall.get(smallLetters.indexOf(c.toString()))
+            Log.d("MAIN ACTIVITY ASCII", a)
+            val final = prev + " " + a
+            Log.d("FINAL ASCII", final)
+            textViewResult.text = ""
+            textViewResult.text = final
+        }
     }
 
     private fun getBinarySmall(find:Char){
+        if(find.isUpperCase()){
+            val a = binaryCapital.get(capitalLetters.indexOf(find.toString()))
+            Log.d("MAIN ACTIVITY BINARY",a)
+            val final = prev+" "+a
+            Log.d("FINAL BINARY",final)
+            textViewResult.text=""
+            textViewResult.text=final
+        }else{
         val a = binarySmall.get(smallLetters.indexOf(find.toString()))
         Log.d("MAIN ACTIVITY BINARY",a)
         val final = prev+" "+a
         Log.d("FINAL BINARY",final)
         textViewResult.text=""
         textViewResult.text=final
+        }
 
     }
 
