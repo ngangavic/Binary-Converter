@@ -4,6 +4,8 @@
         <item >Binary Coded Decimal</item>
         <item >Hexadecimal</item>
         <item >ASCII Code</item>
+        <item >Octal</item>
+        <item >Decimal</item>
     </array>
 
     <array name="binary">
