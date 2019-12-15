@@ -5,10 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.ngangavictor.binaryconverter.data.Data.Companion.asciiCapital
 import com.ngangavictor.binaryconverter.data.Data.Companion.asciiSmall
@@ -76,31 +73,42 @@ class MainActivity : AppCompatActivity() {
 
     private fun getLetter(letter:String) {
         try {
-            if (type == "Binary Coded Decimal") {
-
-                var i = 0
-                Log.d("BINARY LENGTH",letter.length.toString())
-                while (i < letter.length) {
-                    getBinarySmall(letter[i])
-                    i++
+            when(type){
+                "Binary Coded Decimal"->{
+                    var i = 0
+                    Log.d("BINARY LENGTH",letter.length.toString())
+                    while (i < letter.length) {
+                        getBinary(letter[i])
+                        i++
+                    }
                 }
-
-            }else if (type == "ASCII Code"){
-                var i = 0
-                Log.d("ASCII LENGTH",letter.length.toString())
-                while (i < letter.length) {
-                    getASCIISmall(letter[i])
-                    i++
+                "ASCII LENGTH"->{
+                    var i = 0
+                    Log.d("ASCII LENGTH",letter.length.toString())
+                    while (i < letter.length) {
+                        getASCII(letter[i])
+                        i++
+                    }
                 }
-            } else {
-                textViewResult.text = "No result"
+                "Hexadecimal"->{
+                    Toast.makeText(applicationContext,"Feature coming soon",Toast.LENGTH_LONG).show()
+                }
+                "Octal"->{
+                    Toast.makeText(applicationContext,"Feature coming soon",Toast.LENGTH_LONG).show()
+                }
+                "Decimal"->{
+                    Toast.makeText(applicationContext,"Feature coming soon",Toast.LENGTH_LONG).show()
+                }
+                else->
+                    textViewResult.text = "No result"
             }
+
         }catch (e:Exception){
             e.printStackTrace()
         }
     }
 
-    private fun getASCIISmall(c: Char) {
+    private fun getASCII(c: Char) {
         if(c.isUpperCase()){
             val a = asciiCapital.get(capitalLetters.indexOf(c.toString()))
             Log.d("MAIN ACTIVITY ASCII", a)
@@ -118,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getBinarySmall(find:Char){
+    private fun getBinary(find:Char){
         if(find.isUpperCase()){
             val a = binaryCapital.get(capitalLetters.indexOf(find.toString()))
             Log.d("MAIN ACTIVITY BINARY",a)
