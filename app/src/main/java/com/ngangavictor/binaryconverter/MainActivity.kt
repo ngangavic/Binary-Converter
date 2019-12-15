@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.ngangavictor.binaryconverter.data.Data.Companion.asciiSmall
 import com.ngangavictor.binaryconverter.data.Data.Companion.binarySmall
 import com.ngangavictor.binaryconverter.data.Data.Companion.smallLetters
 import java.lang.Exception
@@ -81,12 +82,19 @@ class MainActivity : AppCompatActivity() {
             if (type == "Binary Coded Decimal") {
 
                 var i = 0
-                Log.d("LENGHT",letter.length.toString())
+                Log.d("BINARY LENGTH",letter.length.toString())
                 while (i < letter.length) {
                     getBinarySmall(letter[i])
                     i++
                 }
 
+            }else if (type == "ASCII Code"){
+                var i = 0
+                Log.d("ASCII LENGTH",letter.length.toString())
+                while (i < letter.length) {
+                    getASCIISmall(letter[i])
+                    i++
+                }
             } else {
                 textViewResult.text = "No result"
             }
@@ -95,11 +103,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun getASCIISmall(c: Char) {
+        val a = asciiSmall.get(smallLetters.indexOf(c.toString()))
+        Log.d("MAIN ACTIVITY ASCII",a)
+        val final = prev+" "+a
+        Log.d("FINAL ASCII",final)
+        textViewResult.text=""
+        textViewResult.text=final
+    }
+
     private fun getBinarySmall(find:Char){
         val a = binarySmall.get(smallLetters.indexOf(find.toString()))
-        Log.d("MAIN ACTIVITY",a)
+        Log.d("MAIN ACTIVITY BINARY",a)
         val final = prev+" "+a
-        Log.d("FINAL ",final)
+        Log.d("FINAL BINARY",final)
         textViewResult.text=""
         textViewResult.text=final
 
