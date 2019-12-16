@@ -12,6 +12,8 @@ import com.ngangavictor.binaryconverter.data.Data.Companion.asciiSmall
 import com.ngangavictor.binaryconverter.data.Data.Companion.binaryCapital
 import com.ngangavictor.binaryconverter.data.Data.Companion.binarySmall
 import com.ngangavictor.binaryconverter.data.Data.Companion.capitalLetters
+import com.ngangavictor.binaryconverter.data.Data.Companion.hexCapital
+import com.ngangavictor.binaryconverter.data.Data.Companion.hexSmall
 import com.ngangavictor.binaryconverter.data.Data.Companion.smallLetters
 
 class MainActivity : AppCompatActivity() {
@@ -65,6 +67,14 @@ class MainActivity : AppCompatActivity() {
             ) {
                 if (parent != null) {
                     type = parent.getItemAtPosition(position).toString()
+                    when(type){
+                        "Octal"->{
+                            Toast.makeText(applicationContext,"Feature coming soon",Toast.LENGTH_SHORT).show()
+                        }
+                        "Decimal"->{
+                            Toast.makeText(applicationContext,"Feature coming soon",Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
 
@@ -91,13 +101,18 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 "Hexadecimal"->{
-                    Toast.makeText(applicationContext,"Feature coming soon",Toast.LENGTH_LONG).show()
+                    var i = 0
+                    Log.d("ASCII LENGTH",letter.length.toString())
+                    while (i < letter.length) {
+                        getHexadecimal(letter[i])
+                        i++
+                    }
                 }
                 "Octal"->{
-                    Toast.makeText(applicationContext,"Feature coming soon",Toast.LENGTH_LONG).show()
+//                    Toast.makeText(applicationContext,"Feature coming soon",Toast.LENGTH_LONG).show()
                 }
                 "Decimal"->{
-                    Toast.makeText(applicationContext,"Feature coming soon",Toast.LENGTH_LONG).show()
+//                    Toast.makeText(applicationContext,"Feature coming soon",Toast.LENGTH_LONG).show()
                 }
                 else->
                     textViewResult.text = "No result"
@@ -105,6 +120,24 @@ class MainActivity : AppCompatActivity() {
 
         }catch (e:Exception){
             e.printStackTrace()
+        }
+    }
+
+    private fun getHexadecimal(c: Char) {
+        if(c.isUpperCase()){
+            val a = hexCapital.get(capitalLetters.indexOf(c.toString()))
+            Log.d("MAIN ACTIVITY HEX", a)
+            val final = prev + " " + a
+            Log.d("FINAL HEX", final)
+            textViewResult.text = ""
+            textViewResult.text = final
+        }else {
+            val a = hexSmall.get(smallLetters.indexOf(c.toString()))
+            Log.d("MAIN ACTIVITY HEX", a)
+            val final = prev + " " + a
+            Log.d("FINAL HEX", final)
+            textViewResult.text = ""
+            textViewResult.text = final
         }
     }
 
