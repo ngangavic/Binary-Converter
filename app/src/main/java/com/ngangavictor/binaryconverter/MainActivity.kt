@@ -1,14 +1,12 @@
 package com.ngangavictor.binaryconverter
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.ngangavictor.binaryconverter.data.Data.Companion.asciiCapital
 import com.ngangavictor.binaryconverter.data.Data.Companion.asciiSmall
@@ -22,6 +20,7 @@ import com.ngangavictor.binaryconverter.data.Data.Companion.hexSmall
 import com.ngangavictor.binaryconverter.data.Data.Companion.octalCapital
 import com.ngangavictor.binaryconverter.data.Data.Companion.octalSmall
 import com.ngangavictor.binaryconverter.data.Data.Companion.smallLetters
+import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +29,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var textViewResult: TextView
     lateinit var type: String
     lateinit var prev: String
+    lateinit var imageViewShare:ImageView
+    lateinit var thread:Thread
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         editText = findViewById(R.id.editText)
         spinner = findViewById(R.id.spinner)
         textViewResult = findViewById(R.id.textViewResult)
+        imageViewShare=findViewById(R.id.imageViewShare)
         prev = ""
 
         editText.addTextChangedListener(object : TextWatcher {
@@ -50,9 +52,20 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+               Log.d("START",start.toString())
+                Log.d("BEFORE",before.toString())
+                Log.d("COUNT",count.toString())
+                Log.d("TEXT",s.toString())
+
                 if (s!!.isNotEmpty()) {
-                    prev = textViewResult.text.toString()
-                    getLetter(s.toString())
+                    if(count>before) {
+                        prev = textViewResult.text.toString()
+                        getLetter(s.toString())
+                    }else if (count<before){
+                        val txt=textViewResult.text
+
+                            textViewResult.text = txt.dropLast(9)
+                    }
                 } else {
                     prev = ""
                     textViewResult.text = ""
@@ -78,6 +91,17 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+        imageViewShare.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, textViewResult.text.toString())
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
+
     }
 
     private fun getLetter(letter: String) {
@@ -91,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                         i++
                     }
                 }
-                "ASCII LENGTH" -> {
+                "ASCII Code" -> {
                     var i = 0
                     Log.d("ASCII LENGTH", letter.length.toString())
                     while (i < letter.length) {
@@ -205,23 +229,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getBinary(find: Char) {
+        //val text:String
         if (find.isUpperCase()) {
             val a = binaryCapital.get(capitalLetters.indexOf(find.toString()))
             Log.d("MAIN ACTIVITY BINARY", a)
             val final = prev + " " + a
             Log.d("FINAL BINARY", final)
-            textViewResult.text = ""
+//            textViewResult.text = ""
             textViewResult.text = final
+          //  text=final
         } else {
             val a = binarySmall.get(smallLetters.indexOf(find.toString()))
             Log.d("MAIN ACTIVITY BINARY", a)
             val final = prev + " " + a
             Log.d("FINAL BINARY", final)
-            textViewResult.text = ""
+//            textViewResult.text = ""
             textViewResult.text = final
+           // text=final
         }
+        //textViewResult.text=text
 
     }
+
 
 
 }
