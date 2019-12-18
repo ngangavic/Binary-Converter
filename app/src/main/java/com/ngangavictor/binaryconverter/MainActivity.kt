@@ -20,7 +20,6 @@ import com.ngangavictor.binaryconverter.data.Data.Companion.hexSmall
 import com.ngangavictor.binaryconverter.data.Data.Companion.octalCapital
 import com.ngangavictor.binaryconverter.data.Data.Companion.octalSmall
 import com.ngangavictor.binaryconverter.data.Data.Companion.smallLetters
-import java.lang.StringBuilder
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,8 +28,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var textViewResult: TextView
     lateinit var type: String
     lateinit var prev: String
-    lateinit var imageViewShare:ImageView
-    lateinit var thread:Thread
+    lateinit var imageViewShare: ImageView
+    lateinit var thread: Thread
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         editText = findViewById(R.id.editText)
         spinner = findViewById(R.id.spinner)
         textViewResult = findViewById(R.id.textViewResult)
-        imageViewShare=findViewById(R.id.imageViewShare)
+        imageViewShare = findViewById(R.id.imageViewShare)
         prev = ""
 
         editText.addTextChangedListener(object : TextWatcher {
@@ -52,19 +51,17 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-               Log.d("START",start.toString())
-                Log.d("BEFORE",before.toString())
-                Log.d("COUNT",count.toString())
-                Log.d("TEXT",s.toString())
+                Log.d("START", start.toString())
+                Log.d("BEFORE", before.toString())
+                Log.d("COUNT", count.toString())
+                Log.d("TEXT", s.toString())
 
                 if (s!!.isNotEmpty()) {
-                    if(count>before) {
+                    if (count > before) {
                         prev = textViewResult.text.toString()
                         getLetter(s.toString())
-                    }else if (count<before){
-                        val txt=textViewResult.text
-
-                            textViewResult.text = txt.dropLast(9)
+                    } else if (count < before) {
+                        removeCharacter()
                     }
                 } else {
                     prev = ""
@@ -156,6 +153,41 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun removeCharacter() {
+        try {
+            when (type) {
+                "Binary Coded Decimal" -> {
+                    val txt = textViewResult.text
+                    textViewResult.text = txt.dropLast(9)
+                }
+                "ASCII Code" -> {
+                    val txt = textViewResult.text
+                    textViewResult.text = txt.dropLast(4)
+                }
+                "Hexadecimal" -> {
+                    val txt = textViewResult.text
+                    textViewResult.text = txt.dropLast(3)
+
+                }
+                "Octal" -> {
+                    val txt = textViewResult.text
+                    textViewResult.text = txt.dropLast(4)
+                }
+                "Decimal" -> {
+//                    val txt = textViewResult.text
+//                    textViewResult.text = txt.dropLast(9)
+                    Toast.makeText(applicationContext,"Working on this part",Toast.LENGTH_SHORT).show()
+                }
+                else ->
+                    textViewResult.text = "No result"
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun getDec(c: Char) {
         if (c.isUpperCase()) {
             val a = decimalCapital.get(capitalLetters.indexOf(c.toString()))
@@ -237,7 +269,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("FINAL BINARY", final)
 //            textViewResult.text = ""
             textViewResult.text = final
-          //  text=final
+            //  text=final
         } else {
             val a = binarySmall.get(smallLetters.indexOf(find.toString()))
             Log.d("MAIN ACTIVITY BINARY", a)
@@ -245,12 +277,11 @@ class MainActivity : AppCompatActivity() {
             Log.d("FINAL BINARY", final)
 //            textViewResult.text = ""
             textViewResult.text = final
-           // text=final
+            // text=final
         }
         //textViewResult.text=text
 
     }
-
 
 
 }
