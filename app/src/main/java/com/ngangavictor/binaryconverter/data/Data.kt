@@ -262,6 +262,7 @@ class Data {
             "131",
             "132"
         )
+
         var octalSmall = arrayOf(
             "141",
             "142",

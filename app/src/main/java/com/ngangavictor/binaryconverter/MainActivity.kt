@@ -104,17 +104,69 @@ class MainActivity : AppCompatActivity() {
         }
 
         buttonEncode.setOnClickListener {
-            getLetter(editText.text.toString())
+            getEncode(editText.text.toString())
+        }
+        buttonDecode.setOnClickListener {
+            getDecode(editText.text.toString())
         }
 
     }
 
-    private fun getLetter(letter: String) {
+    private fun getDecode(letter: String){
         try {
             when (type) {
                 "Binary Coded Decimal" -> {
                     val txt = editText.text.toString()
-                    val binary = getBinary(txt)
+                    val binary = getBinaryDecode(txt)
+                    textViewResult.text = binary
+                }
+                "ASCII Code" -> {
+                    var i = 0
+                    Log.d("ASCII LENGTH", letter.length.toString())
+                    while (i < letter.length) {
+                        getASCII(letter[i])
+                        i++
+                    }
+                }
+                "Hexadecimal" -> {
+                    var i = 0
+                    Log.d("HEX LENGTH", letter.length.toString())
+                    while (i < letter.length) {
+                        getHexadecimal(letter[i])
+                        i++
+                    }
+                }
+                "Octal" -> {
+                    var i = 0
+                    Log.d("OCTAL LENGTH", letter.length.toString())
+                    while (i < letter.length) {
+                        getOctal(letter[i])
+                        i++
+                    }
+                }
+                "Decimal" -> {
+                    var i = 0
+                    Log.d("DEC LENGTH", letter.length.toString())
+                    while (i < letter.length) {
+                        getDec(letter[i])
+                        i++
+                    }
+                }
+                else ->
+                    textViewResult.text = "No result"
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getEncode(letter: String) {
+        try {
+            when (type) {
+                "Binary Coded Decimal" -> {
+                    val txt = editText.text.toString()
+                    val binary = getBinaryEncode(txt)
                     textViewResult.text = binary
                 }
                 "ASCII Code" -> {
@@ -265,7 +317,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getBinary(find: String):String {
+    private fun getBinaryEncode(find: String):String {
         val builder = StringBuilder()
 
         for (c in find.toCharArray()) {
@@ -275,6 +327,36 @@ class MainActivity : AppCompatActivity() {
 
         return builder.toString()
 
+    }
+
+    private fun getBinaryDecode(binary: String):String{
+        if (!isBinary(binary))
+            return "Not a binary value";
+
+        val chars = CharArray(binary.length / 8)
+        var i = 0
+
+        while (i < binary.length) {
+            val str = binary.substring(i, i + 8)
+            val nb = Integer.parseInt(str, 2)
+            chars[i / 8] = nb.toChar()
+            i += 8
+        }
+
+        return String(chars)
+    }
+
+    fun isBinary(txt: String?): Boolean {
+        if (txt != null && txt.length % 8 == 0) {
+            for (c in txt.toCharArray()) {
+                if (c != '0' && c != '1')
+                    return false
+            }
+
+            return true
+        }
+
+        return false
     }
 
 
