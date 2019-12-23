@@ -30,6 +30,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var prev: String
     lateinit var imageViewShare: ImageView
     lateinit var thread: Thread
+    lateinit var buttonEncode: Button
+    lateinit var buttonDecode: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,37 +41,39 @@ class MainActivity : AppCompatActivity() {
         spinner = findViewById(R.id.spinner)
         textViewResult = findViewById(R.id.textViewResult)
         imageViewShare = findViewById(R.id.imageViewShare)
+        buttonDecode=findViewById(R.id.buttonDecode)
+        buttonEncode=findViewById(R.id.buttonEncode)
         prev = ""
 
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                Log.d("START", start.toString())
-                Log.d("BEFORE", before.toString())
-                Log.d("COUNT", count.toString())
-                Log.d("TEXT", s.toString())
-
-                if (s!!.isNotEmpty()) {
-                    if (count > before) {
-                        prev = textViewResult.text.toString()
-                        getLetter(s.toString())
-                    } else if (count < before) {
-                        removeCharacter()
-                    }
-                } else {
-                    prev = ""
-                    textViewResult.text = ""
-                }
-            }
-
-        })
+//        editText.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(s: Editable?) {
+//
+//            }
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                Log.d("START", start.toString())
+//                Log.d("BEFORE", before.toString())
+//                Log.d("COUNT", count.toString())
+//                Log.d("TEXT", s.toString())
+//
+//                if (s!!.isNotEmpty()) {
+//                    if (count > before) {
+//                        prev = textViewResult.text.toString()
+//                        getLetter(s.toString())
+//                    } else if (count < before) {
+//                        removeCharacter()
+//                    }
+//                } else {
+//                    prev = ""
+//                    textViewResult.text = ""
+//                }
+//            }
+//
+//        })
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -99,18 +103,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(shareIntent)
         }
 
+        buttonEncode.setOnClickListener {
+            getLetter(editText.text.toString())
+        }
+
     }
 
     private fun getLetter(letter: String) {
         try {
             when (type) {
                 "Binary Coded Decimal" -> {
-                    var i = 0
-                    Log.d("BINARY LENGTH", letter.length.toString())
-                    while (i < letter.length) {
-                        getBinary(letter[i])
-                        i++
-                    }
+                    val txt = editText.text.toString()
+                    val binary = getBinary(txt)
+                    textViewResult.text = binary
                 }
                 "ASCII Code" -> {
                     var i = 0
@@ -260,26 +265,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getBinary(find: Char) {
-        //val text:String
-        if (find.isUpperCase()) {
-            val a = binaryCapital.get(capitalLetters.indexOf(find.toString()))
-            Log.d("MAIN ACTIVITY BINARY", a)
-            val final = prev + " " + a
-            Log.d("FINAL BINARY", final)
-//            textViewResult.text = ""
-            textViewResult.text = final
-            //  text=final
-        } else {
-            val a = binarySmall.get(smallLetters.indexOf(find.toString()))
-            Log.d("MAIN ACTIVITY BINARY", a)
-            val final = prev + " " + a
-            Log.d("FINAL BINARY", final)
-//            textViewResult.text = ""
-            textViewResult.text = final
-            // text=final
+    private fun getBinary(find: String):String {
+        val builder = StringBuilder()
+
+        for (c in find.toCharArray()) {
+            val toString = Integer.toString(c.toInt(), 2); // get char value in binary
+            builder.append(String.format("%08d", Integer.parseInt(toString))); // we complete to have 8 digits
         }
-        //textViewResult.text=text
+
+        return builder.toString()
 
     }
 
